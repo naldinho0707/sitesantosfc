@@ -31,6 +31,6 @@ RUN ./mvnw package
 CMD ["java","-jar","target/sitesantosfc-0.0.1-SNAPSHOT.war"]
 
 # Configurar diretório de uploads
-RUN mkdir -p src/main/resources/static/uploads/ && chown -R myuser:mygroup src/main/resources/static/uploads/
+RUN mkdir -p /src/main/resources/static/uploads/ && chown -R myuser:mygroup /src/main/resources/static/uploads/
 
 
