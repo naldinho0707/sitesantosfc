@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"> 
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{img/Santos-480.png}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <title>CADASTRO | SANTOS FC</title>
+</head>
+<body>
+    
+    <header>
+        <aside>
+            <img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube">
+            <h1>Santos Futebol Clube</h1>
+        </aside>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li> 
+                <li><a th:href="@{/listagemTitulo}">Títulos</a></li>
+                <li><a th:href="@{/}">Escudos</a></li>
+                <li><a th:href="@{/campeaoSerieB}">Campeão Serie B</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <main class="cadastrarTitulo">
+
+        <div>
+            <a th:href="@{/listagemTitulo}">Voltar</a></li>
+            <h2>Cadastre um Título do Peixão!</h2>
+        </div>
+
+        <section>
+            <form th:action="@{/cadastroTitulo}" method="post" th:object="${titulo}" enctype="multipart/form-data">
+
+                <label for="competicao">Nome da Competição</label>
+                <input type="text" th:field="*{competicao}"  name="competicao" placeholder="Digite o Nome da Competição ex: Mundial de Clubes" required>
+
+                <label for="qt_titulos">Quantidade de Título do Santos nesta Competição</label>
+                <input type="text" th:field="*{qt_titulos}" name="qt_titulos" maxlength="2" required>
+
+                <label for="temporadas">Temporadas que o Santos foi Campeão</label>
+                <input type="text" th:field="*{temporadas}" name="temporadas"  placeholder="Digite os anos que o Santos foi Campeão" maxlength="255" required>
+
+                <label for="file">Carregue a Imagem da Taça desta Competição</label>
+                <input type="file" name="file" required>
+
+                <!-- <input type="submit" value="Cadastrar" name="Cadastrar"> -->
+                <button type="submit" name="Cadastrar">Cadastrar Título</button>
+            </form>
+        </section>
+
+    </main>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

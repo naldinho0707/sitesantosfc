@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"> 
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{img/Santos-480.png}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>ATUALIZAR | SANTOS FC</title>
+    <!-- ajustar a base para carregar imagens e CSS quando há parâmetro na URL, neste cado o ID 
+     de referência para popular o formulário de atualização -->
+    <base href="/" />
+
+ </head>
+
+<body>
+    
+    <header>
+        <aside>
+            <img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube">
+            <h1>Santos Futebol Clube</h1>
+        </aside>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li> 
+                <li><a th:href="@{/listagemTitulo}">Títulos</a></li>
+                <li><a th:href="@{/}">Escudos</a></li>
+                <li><a th:href="@{/campeaoSerieB}">Campeão Serie B</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <main class="atualizarTitulo">
+
+        <h2>Atualize os Dados do Título Selecionado</h2>
+
+        <section>
+            <form th:action="@{'/atualizarTitulo/' + ${id}}" method="post" th:object="${titulo}" enctype="multipart/form-data">
+
+                <label for="competicao">Nome da Competição</label>
+                <input type="text" th:field="*{competicao}"  name="competicao" placeholder="Digite o Nome da Competição ex: Mundial de Clubes">
+
+                <label for="qt_titulos">Quantidade de Título do Santos nesta Competição</label>
+                <input type="text" th:field="*{qt_titulos}" name="qt_titulos" maxlength="2">
+
+                <label for="temporadas">Temporadas que o Santos foi Campeão</label>
+                <input type="text" th:field="*{temporadas}" name="temporadas"  placeholder="Digite os anos que o Santos foi Campeão" maxlength="255">
+
+                <label for="file">Carregue outra Imagem para Substituir a do lado</label>
+                <input type="file" name="file">
+
+                <!-- <input type="submit" value="Cadastrar" name="Cadastrar"> -->
+                <button type="submit" name="Atualizar">Atualizar Dados</button>
+            </form>
+
+            <div>
+                <a th:href="@{/listagemTitulo}">Voltar</a></li>
+                <img th:if="${titulo.imagem}" th:src="@{|/uploads/${titulo.imagem}|}" alt="Imagem da Taça do Título">
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
+

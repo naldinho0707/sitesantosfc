@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{img/Santos-480.png}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <title>TÍTULOS | SANTOS FC</title>
+</head>
+
+<body id="body-listagem">
+
+    <header id="header-listagem">
+        <aside>
+            <img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube">
+            <h1>Santos Futebol Clube</h1>
+        </aside>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li> 
+                <li>Títulos</li>
+                <li><a th:href="@{/escudos}">Escudos</a></li>
+                <li><a th:href="@{/campeaoSerieB}">Campeão Serie B</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-listagem">
+        
+        <ul>
+            <li><a th:href="@{/cadastroTitulo}">+ Adicionar Título</a></li>
+            <li><h2>TÍTULOS DO SANTOS FUTEBOL CLUBE</h2></li>
+        </ul>
+
+        <section class="tabelaTitulos">
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>TROFÉUS</th>
+                        <th>COMPETIÇÃO</th>
+                        <th>TÍTULOS</th>
+                        <th>TEMPORADAS</th>
+                        <th>EDITAR / DELETAR</th>
+                    </tr>
+                </thead>
+                
+                <!-- Obs.: depois do model e da view o que conecta os 02 á o arquivo controller.java -->
+                <tbody>
+                    <!-- função each do timelift -->
+                    <!-- a cada cliente a variável "clientes"-->
+                    <tr th:each="titulo : ${titulos}">
+                        <td th:text="${titulo.id}"></td>
+                        <td><img th:if="${titulo.imagem}" th:src="@{'uploads/' + ${titulo.imagem}}" alt="Imagem da Taça do Campeonato" class="taca"></td>
+                        <td th:text="${titulo.competicao}"></td>
+                        <td th:text="${titulo.qt_titulos}"></td>
+                        <td th:text="${titulo.temporadas}"></td>
+                        <!--  -->
+                        <td><a th:href="@{'/atualizarTitulo/' + ${titulo.id} }"><img th:src="@{img/edit-32.ico}" alt="Ícone para Editar o Título"></a>                        
+
+                            <form th:action="@{'/deletarTitulo/' + ${titulo.id} }" method="post" th:object="${titulo}" enctype="multipart/form-data">
+                                <button type="submit" th:data-nome="${titulo.competicao}" onclick="return confirm('Deseja realmente excluir o registro do Título: ' + this.dataset.nome + '?');"><img th:src="@{img/trash-32.ico}" alt="Ícone para Deletar o Título"></button>
+                            </form>
+                        
+                        </td>
+
+                        <!-- <img th:src="@{|/uploads/${cliente.imagem}|}" alt="Imagem do cliente"> -->
+                        <!-- <td><a th:href="@{'/deletar/' + ${cliente.id} }" th:data-nome="${cliente.nome}" onclick="return confirm('Deseja realmente editar o registro do usuário: ' + this.dataset.nome + '?');">Deletar</a></td> -->
+                        <!-- <td>
+                          
+                        </td> -->
+                    </tr>
+                </tbody>
+            
+            </table>
+        </section>
+    </main>
+
+
+</body>
+
+</html>

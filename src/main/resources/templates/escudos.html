@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"> 
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{img/Santos-480.png}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <title>ESCUDOS | SANTOS FC</title>
+    <base href="/" />
+</head>
+<body>
+    
+    <header>
+        <aside>
+            <img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube">
+            <h1>Santos Futebol Clube</h1>
+        </aside>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li> 
+                <li><a th:href="@{/listagemTitulo}">Títulos</a></li>
+                <li>Escudos</li>
+                <li><a th:href="@{/campeaoSerieB}">Campeão Serie B</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="escudos">
+
+        <h2>Escudos do Santos ao Longo da História</h2>
+
+        <table>
+            <caption>Evolução do Escudo do Santos Futebol Clube</caption>
+            <thead>
+                <tr>
+                    <th>1912</th>
+                    <th>1915</th>
+                    <th>1942 / 1944</th>
+                    <th>1925 / 1967</th>
+                    <th>1968 / 2022</th>
+                    <th>2023</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img th:src="@{img/escudo-1912.png}" alt="Escudo do Santos Futebol Clube de 1912"></td>
+                    <td><img th:src="@{img/escudo-1915.png}" alt="Escudo do Santos Futebol Clube de 1915"></td>
+                    <td><img th:src="@{img/escudo-1942.png}" alt="Escudo do Santos Futebol Clube de 1942 a 1944"></td>
+                    <td><img th:src="@{img/escudo-1967.png}" alt="Escudo do Santos Futebol Clube de 1925 a 1967"></td>
+                    <td><img th:src="@{img/escudo-1968.png}" alt="Escudo do Santos Futebol Clube de 1968 a 2022"></td>
+                    <td><img th:src="@{img/escudo-2023.png}" alt="Escudo do Santos Futebol Clube de 2023"></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>&copy; Criado por: Reginaldo Luiz Formoso Junior | Aluno de Sistemas para Internet - FATEC-RL</p>
+    </footer>
+
+</body>
+</html>
+

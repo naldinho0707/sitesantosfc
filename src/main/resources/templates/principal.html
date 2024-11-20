@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"> 
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{img/Santos-480.png}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <title>SANTOS FUTEBOL CLUBE</title>
+</head>
+<body>
+    
+    <header>
+        <aside>
+            <img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube">
+            <h1>Santos Futebol Clube</h1>
+        </aside>
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li><a th:href="@{/listagemTitulo}">Títulos</a></li>
+                <li><a th:href="@{/escudos}">Escudos</a></li>
+                <li><a th:href="@{/campeaoSerieB}">Campeão Serie B</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Hino Oficial</h2>
+
+        <article>
+            <p>Sou alvinegro da Vila Belmiro</p>
+            <p>O Santos vive no meu coração</p>
+            <p>É o motivo de todo o meu riso</p>
+            <p>De minhas lágrimas e emoção</p>
+        </article>
+
+        <article>
+            <p>Sua bandeira no mastro é a história</p>
+            <p>De um passado e um presente só de glórias</p>
+            <p>Nascer, viver e no Santos morrer</p>
+            <p>É um orgulho que nem todos podem ter</p>
+        </article>
+
+
+        <article>
+            <p>No Santos pratica-se o esporte</p>
+            <p>Com dignidade e com fervor</p>
+            <p>Seja qual for a sua sorte</p>
+            <p>De vencido ou vencedor</p>
+        </article>
+
+        <article>
+            <p>Com técnica e disciplina</p>
+            <p>Dando o sangue com amor</p>
+            <p>Pela bandeira que ensina</p>
+            <p>Lutar com fé e com ardor</p>
+        </article>
+           
+    </main>
+
+    <footer>
+        <p>&copy; Criado por: Reginaldo Luiz Formoso Junior | Aluno de Sistemas para Internet - FATEC-RL</p>
+    </footer>
+
+</body>
+</html>
+
