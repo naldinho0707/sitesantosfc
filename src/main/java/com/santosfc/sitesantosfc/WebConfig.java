@@ -13,11 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        if (uploadDir != null) {
-            registry.addResourceHandler("/uploads/**")
-                    .addResourceLocations("file:" + uploadDir);
-        } else {
-            throw new IllegalArgumentException("The upload directory cannot be null.");
-        }
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:" + uploadDir);
     }
 }
