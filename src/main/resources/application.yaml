@@ -24,4 +24,4 @@ spring:
             platform: postgres
 
     file:
-        upload-dir: /src/main/resources/static/uploads/
+        upload-dir: src/main/resources/static/uploads/
