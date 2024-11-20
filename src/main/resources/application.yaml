@@ -22,3 +22,6 @@ spring:
             schema-locations: classpath:/schema-postgresql.sql
             mode: always
             platform: postgres
+
+    file:
+        upload-dir: /src/main/resources/static/uploads/
