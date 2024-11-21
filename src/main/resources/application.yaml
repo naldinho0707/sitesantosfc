@@ -23,6 +23,4 @@ spring:
             mode: always
             platform: postgres
 
-    file:
-        upload-dir: /app/src/main/resources/static/uploads/
 

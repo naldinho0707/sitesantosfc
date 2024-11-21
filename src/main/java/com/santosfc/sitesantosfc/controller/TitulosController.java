@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+// import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,10 +32,7 @@ public class TitulosController {
     @Autowired
     private ApplicationContext context;
 
-    @Value("${file.upload-dir}")
-    private String uploadDir;
-
-    // private static String PASTA_UPLOAD = "src/main/resources/static/uploads/";
+    private static String PASTA_UPLOAD = "app/src/main/resources/static/uploads/";
   
 
     @GetMapping("/")
@@ -77,7 +74,7 @@ public class TitulosController {
         try { if (!file.isEmpty()) {
 
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(uploadDir + file.getOriginalFilename());
+            Path path = Paths.get(PASTA_UPLOAD + file.getOriginalFilename());
             Files.write(path, bytes);
             titulo.setImagem(file.getOriginalFilename());
             }
@@ -156,12 +153,12 @@ public class TitulosController {
         TituloService ts = context.getBean(TituloService.class);
         Titulo old_img = ts.obterTitulo(id);
         String caminhoImagem = old_img.getImagem(); // Obter o caminho da imagem antiga
-        Path path2 = Paths.get(uploadDir + caminhoImagem);
+        Path path2 = Paths.get(PASTA_UPLOAD + caminhoImagem);
 
 
         try { if (!file.isEmpty()) {
                 byte[] bytes = file.getBytes();
-                Path path = Paths.get(uploadDir + file.getOriginalFilename());
+                Path path = Paths.get(PASTA_UPLOAD + file.getOriginalFilename());
                 Files.write(path, bytes);
                 titulo.setImagem(file.getOriginalFilename());
                 // Deletar o arquivo antigo se tiver imagem nova carregada
@@ -197,7 +194,7 @@ public class TitulosController {
         String caminhoImagem = titulo.getImagem(); 
             
         try {
-            Files.deleteIfExists(Paths.get(uploadDir + caminhoImagem)); 
+            Files.deleteIfExists(Paths.get(PASTA_UPLOAD+ caminhoImagem)); 
         } catch (IOException e) {
             e.printStackTrace(); // Lidar com exceções
         }
