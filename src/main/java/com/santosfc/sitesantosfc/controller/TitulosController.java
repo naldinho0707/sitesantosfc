@@ -32,13 +32,8 @@ public class TitulosController {
     @Autowired
     private ApplicationContext context;
 
-    // private static String PASTA_UPLOAD = "src/main/resources/static/uploads/";
-
-    // private static String PASTA_UPLOAD = "/app/uploads/";
-
-    private static String PASTA_UPLOAD = "/tmp/uploads/";
-
-    
+    private static String PASTA_UPLOAD = "src/main/resources/static/uploads/";
+   
 
     @GetMapping("/")
     public String principal(){
@@ -79,31 +74,18 @@ public class TitulosController {
         try { if (!file.isEmpty()) {
 
             // Verifica se o diretório de upload existe, caso contrário, cria-o
-            Path uploadDir = Paths.get(PASTA_UPLOAD);
-            if (!Files.exists(uploadDir)) {
-                Files.createDirectories(uploadDir);
-                System.out.println("Diretório criado: " + uploadDir.toAbsolutePath());
-            }
-
-    
-            // Salva o arquivo no diretório
+            Path abs = Paths.get(PASTA_UPLOAD);
+            System.out.println("Caminho absoluto do arquivo: " + abs.toAbsolutePath());
+     
             byte[] bytes = file.getBytes();
-            Path path = uploadDir.resolve(file.getOriginalFilename());
-            
-            // Imprime o caminho absoluto no console para verificar
-            System.out.println("Caminho absoluto do arquivo: " + path.toAbsolutePath());
-
+            Path path = Paths.get(PASTA_UPLOAD + file.getOriginalFilename());
             Files.write(path, bytes);
             titulo.setImagem(file.getOriginalFilename());
 
-            // byte[] bytes = file.getBytes();
-            // Path path = Paths.get(PASTA_UPLOAD + file.getOriginalFilename());
-            // Files.write(path, bytes);
-            // titulo.setImagem(file.getOriginalFilename());
             }
         } catch (IOException e) {
              e.printStackTrace(); 
-        }
+          }
 
         ts.inserirTitulo(titulo);
         // arrumar depois o retorno para a página sucesso
