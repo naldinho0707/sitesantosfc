@@ -73,10 +73,30 @@ public class TitulosController {
 
         try { if (!file.isEmpty()) {
 
+            // Define o caminho do diretório de upload
+            Path uploadDir = Paths.get(PASTA_UPLOAD);
+
+            // Verifica se o diretório de upload existe, caso contrário, cria-o
+            if (!Files.exists(uploadDir)) {
+                Files.createDirectories(uploadDir);
+                System.out.println("Diretório criado: " + uploadDir.toAbsolutePath());
+            }
+
+
+            // Salva o arquivo no diretório
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(PASTA_UPLOAD + file.getOriginalFilename());
+            Path path = uploadDir.resolve(file.getOriginalFilename());
+            
+            // Imprime o caminho absoluto no console para verificar
+            System.out.println("Caminho absoluto do arquivo: " + path.toAbsolutePath());
+
             Files.write(path, bytes);
             titulo.setImagem(file.getOriginalFilename());
+
+            // byte[] bytes = file.getBytes();
+            // Path path = Paths.get(PASTA_UPLOAD + file.getOriginalFilename());
+            // Files.write(path, bytes);
+            // titulo.setImagem(file.getOriginalFilename());
             }
         } catch (IOException e) {
              e.printStackTrace(); 
