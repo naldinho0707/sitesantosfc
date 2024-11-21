@@ -30,5 +30,9 @@ RUN ./mvnw package
 # cmd executar o java (arquivo war) na pasta target do projeto sitedb: target/sitesantosfc.war
 CMD ["java","-jar","target/sitesantosfc-0.0.1-SNAPSHOT.war"]
 
+# Configurar diretório de uploads
+RUN mkdir -p /app/src/main/resources/static/uploads/ && chown -R root:root /app/src/main/resources/static/uploads/
+
+
 
 
