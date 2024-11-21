@@ -32,7 +32,10 @@ public class TitulosController {
     @Autowired
     private ApplicationContext context;
 
-    private static String PASTA_UPLOAD = "src/main/resources/static/uploads/";
+    // private static String PASTA_UPLOAD = "src/main/resources/static/uploads/";
+
+    private static String PASTA_UPLOAD = "/app/uploads/";
+
     
 
     @GetMapping("/")

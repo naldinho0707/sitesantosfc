@@ -19,7 +19,7 @@ COPY .mvn .mvn
 COPY src ./src
 
 # da a permisão para porra toda  pode usar o +x  777 é para tudo
-RUN chmod 777  mvnw
+RUN chmod 777 mvnw
 
 # quero gerar o war é o maven, executar:
 RUN ./mvnw package
@@ -27,11 +27,16 @@ RUN ./mvnw package
 # mostra o nome do arquivo
 # RUN ls -l ./target
 
+# Criar um diretório separado para uploads
+RUN mkdir -p /app/uploads && chown -R root:root /app/uploads
+
+# Expor a porta usada pela aplicação
+EXPOSE 8080
+
 # cmd executar o java (arquivo war) na pasta target do projeto sitedb: target/sitesantosfc.war
 CMD ["java","-jar","target/sitesantosfc-0.0.1-SNAPSHOT.war"]
 
-# Configurar diretório de uploads
-RUN mkdir -p /app/src/main/resources/static/uploads/ && chown -R root:root /app/src/main/resources/static/uploads/
+
 
 
 
