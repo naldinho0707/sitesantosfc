@@ -27,12 +27,6 @@ RUN ./mvnw package
 # mostra o nome do arquivo
 # RUN ls -l ./target
 
-# Criar um diretório separado para uploads
-RUN mkdir -p /app/uploads && chown -R root:root /app/uploads
-
-# Expor a porta usada pela aplicação
-EXPOSE 8080
-
 # cmd executar o java (arquivo war) na pasta target do projeto sitedb: target/sitesantosfc.war
 CMD ["java","-jar","target/sitesantosfc-0.0.1-SNAPSHOT.war"]
 

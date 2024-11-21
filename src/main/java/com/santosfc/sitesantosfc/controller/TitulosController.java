@@ -34,7 +34,9 @@ public class TitulosController {
 
     // private static String PASTA_UPLOAD = "src/main/resources/static/uploads/";
 
-    private static String PASTA_UPLOAD = "/app/uploads/";
+    // private static String PASTA_UPLOAD = "/app/uploads/";
+
+    private static String PASTA_UPLOAD = "/tmp/uploads/";
 
     
 
@@ -76,16 +78,14 @@ public class TitulosController {
 
         try { if (!file.isEmpty()) {
 
-            // Define o caminho do diretório de upload
-            Path uploadDir = Paths.get(PASTA_UPLOAD);
-
             // Verifica se o diretório de upload existe, caso contrário, cria-o
+            Path uploadDir = Paths.get(PASTA_UPLOAD);
             if (!Files.exists(uploadDir)) {
                 Files.createDirectories(uploadDir);
                 System.out.println("Diretório criado: " + uploadDir.toAbsolutePath());
             }
 
-
+    
             // Salva o arquivo no diretório
             byte[] bytes = file.getBytes();
             Path path = uploadDir.resolve(file.getOriginalFilename());
