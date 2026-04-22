@@ -29,6 +29,9 @@ RUN ./mvnw package
 # mostra o nome do arquivo
 # RUN ls -l ./target
 
+# Cria a pasta de uploads manualmente para garantir que ela exista
+RUN mkdir -p target/classes/static/uploads && chmod 777 target/classes/static/uploads
+
 # cmd executar o java (arquivo war) na pasta target do projeto sitedb: target/sitesantosfc.war
 CMD ["java","-jar","target/sitesantosfc-0.0.1-SNAPSHOT.war"]
 

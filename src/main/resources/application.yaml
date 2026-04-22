@@ -5,10 +5,10 @@ server:
 spring:
     datasource:
         url: jdbc:postgresql://d7khvujbc2fs73dpaim0-a.oregon-postgres.render.com:5432/santos_db_9222
-        username: banco_kusb_user
+        username: adm
         # colocar no git ignore para niguem ver a senha, não expor a senha ou colocar variáveis de ambiente
         # ou repositório privado
-        password: HuSj3SWgBFZS3GsxNbC2iXB6cdVeaxmZ
+        password: nB8ZT6ktToDZEkfH6pn4PRE42R20sVPw
         driver-class-name: org.postgresql.Driver
         initialize: true
 
