@@ -4,7 +4,7 @@ server:
 
 spring:
     datasource:
-        url: jdbc:postgresql://cstju0dumphs73fpsd2g-a.oregon-postgres.render.com:5432/banco_kusb
+        url: jdbc:postgresql://d7khvujbc2fs73dpaim0-a.oregon-postgres.render.com:5432/santos_db_9222
         username: banco_kusb_user
         # colocar no git ignore para niguem ver a senha, não expor a senha ou colocar variáveis de ambiente
         # ou repositório privado
