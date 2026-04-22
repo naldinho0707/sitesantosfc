@@ -1,4 +1,6 @@
-FROM openjdk:17-jdk-alpine
+# FROM openjdk:17-jdk-alpine  A imagem oficial openjdk foi descontinuada, usar Eclipse Temurin ou Amazon Corretto.
+
+FROM eclipse-temurin:17-jdk-alpine
 
 # vai montar uma máquina (pequena) virtual só para rodar o java
 # porque o render não tem suporte nativo para java
