@@ -1,4 +1,3 @@
-
 server:
     port: 8080
 
@@ -15,22 +14,13 @@ spring:
         # DB_PASSWORD -> (Cole a senha que estava no seu código)
         # Dessa forma, quando o projeto subir, o Render "injeta" esses valores no seu application.yaml e tudo funciona sem ninguém ver a senha no GitHub.
 
+        # colocar no .gitignore para niguem ver a senha, não expor a senha ou colocar variáveis de ambiente
+        # ou repositório privado
 
     datasource:
         url: ${DB_URL}
-
-        # jdbc:postgresql://d7khvujbc2fs73dpaim0-a.oregon-postgres.render.com:5432/santos_db_9222
-
         username: ${DB_USER}
-        
-        # adm
-
-        # colocar no git ignore para niguem ver a senha, não expor a senha ou colocar variáveis de ambiente
-        # ou repositório privado
-
         password: ${DB_PASSWORD}
-
-        # nB8ZT6ktToDZEkfH6pn4PRE42R20sVPw
 
         driver-class-name: org.postgresql.Driver
         initialize: true
