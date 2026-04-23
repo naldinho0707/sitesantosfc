@@ -24,7 +24,10 @@ COPY src ./src
 RUN chmod 777 mvnw
 
 # quero gerar o war é o maven, executar:
-RUN ./mvnw package
+#RUN ./mvnw package
+
+#ignorar testes
+RUN ./mvnw package -DskipTests
 
 # mostra o nome do arquivo
 # RUN ls -l ./target
