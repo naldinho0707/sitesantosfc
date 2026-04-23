@@ -3,18 +3,42 @@ server:
     port: 8080
 
 spring:
+        # 1) Em vez de escrever a senha e o usuário diretamente, devemos colocar "espaços reservados" (placeholders) que o Spring Boot preencherá automaticamente.
+
+        # 2) Como você está usando o Render, você não precisa de um arquivo .env lá dentro. Você configura as variáveis diretamente no painel deles
+        # No painel do seu Web Service no Render:
+        # - Clique na aba Environment.
+        # - Clique em Add Environment Variable.
+        # - Adicione as chaves e os valores que você copiou do seu banco:
+        # DB_URL -> (Cole a URL do seu postgres do Render)
+        # DB_USER -> (Cole o nome do usuário do banco)
+        # DB_PASSWORD -> (Cole a senha que estava no seu código)
+        # Dessa forma, quando o projeto subir, o Render "injeta" esses valores no seu application.yaml e tudo funciona sem ninguém ver a senha no GitHub.
+
+
     datasource:
-        url: jdbc:postgresql://d7khvujbc2fs73dpaim0-a.oregon-postgres.render.com:5432/santos_db_9222
-        username: adm
+        url: ${DB_URL}
+
+        # jdbc:postgresql://d7khvujbc2fs73dpaim0-a.oregon-postgres.render.com:5432/santos_db_9222
+
+        username: ${DB_USER}
+        
+        # adm
+
         # colocar no git ignore para niguem ver a senha, não expor a senha ou colocar variáveis de ambiente
         # ou repositório privado
-        password: nB8ZT6ktToDZEkfH6pn4PRE42R20sVPw
+
+        password: ${DB_PASSWORD}
+
+        # nB8ZT6ktToDZEkfH6pn4PRE42R20sVPw
+
         driver-class-name: org.postgresql.Driver
         initialize: true
 
     jpa: 
         hibernate:
-            ddl-auto: create-drop
+            # ddl-auto: create-drop
+            ddl-auto: update # Alterado para 'update' para não apagar seus dados toda hora
             generate-ddl: true
 
     sql:
