@@ -41,15 +41,21 @@ public class TitulosController {
         return "principal";
     }
 
+    @GetMapping("/elenco")
+    public String elenco(){
+       // retorno página elenco
+        return "elenco";
+    }
+
     @GetMapping("/escudos")
     public String escudos(){
-       // retorno página principal
+       // retorno página escudos
         return "escudos";
     }
 
     @GetMapping("/campeaoSerieB")
     public String campeaoSerieB(){
-       // retorno página principal
+       // retorno página campeão série B
         return "campeaoSerieB";
     }
 

@@ -565,6 +565,68 @@ footer{
 }
 
 
+
+
+/* Estilização da página: elenco.html */
+/* classe: elenco pertence ao elemento <main> */
+
+
+.elenco{
+    background-image: none;
+    align-self: center;
+    padding: 20px 0 0 0;
+}
+
+.elenco h2{
+    color: rgb(0, 0, 0);
+    text-shadow: 2px 2px 3px #D3A809;
+    font-family: Bakbak One;
+    font-size: 40px;
+    /* letter-spacing: 2px; */
+}
+
+.elenco table{
+    border: 3px solid #D3A809;   
+    padding: 15px;
+    border-radius: 25px 0 25px 0;
+    font-size: 22px;
+}
+
+.elenco table caption{
+    color: white;
+    font-size: 30px;
+    text-shadow: 2px 2px 3px #D3A809;
+    background-color: black;
+    border: 3px solid #D3A809;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 0 25px 0 25px;
+}
+
+.elenco tr{
+  display: grid;
+  column-gap: 20px;
+  grid-template-columns: 200px 200px 200px 200px;
+  justify-content: center;
+  align-items: center;
+}
+
+.elenco tbody td{
+   background-color: #000000;
+   /* border: none; */
+   justify-self:center;
+   border: 2px solid #D3A809;
+   border-radius: 15px;
+   align-self: center;
+}
+
+.elenco tbody td img{
+    /* width: 180px; */
+    max-height: 200px;
+}
+
+
+
 /* Estilização da página: escudos.html */
 /* classe: escudo pertence ao elemento <main> */
 
@@ -629,3 +691,9 @@ footer{
 .serieB img{
     border: 3px solid black;
 }
+
+
+
+
+
+
