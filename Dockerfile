@@ -26,7 +26,7 @@ RUN chmod 777 mvnw
 # quero gerar o war é o maven, executar:
 #RUN ./mvnw package
 
-#ignorar testes
+#ignorar testes (RUN ./mvnw package) para carregar as variaveis no render, porque os testes não vão passar sem as variaveis de ambiente
 RUN ./mvnw package -DskipTests
 
 # mostra o nome do arquivo
