@@ -15,6 +15,7 @@ import jakarta.annotation.PostConstruct;
 public class TituloDAO {
 // DAO = Data Acssess Object
 
+/*
 @Autowired
 DataSource dataSource;
 
@@ -22,6 +23,21 @@ JdbcTemplate jdbc;
 
 @PostConstruct
 private void initialize(){
+    jdbc = new JdbcTemplate(dataSource);
+}
+*/
+
+//Corrigi o erro de NullPointerException, injetando o DataSource e inicializando o JdbcTemplate no método initialize() usando @PostConstruct para garantir que o DataSource seja injetado antes de usar o JdbcTemplate.
+@Autowired
+private DataSource dataSource;
+
+private JdbcTemplate jdbc;
+
+@PostConstruct
+private void initialize(){
+    if (dataSource == null) {
+        throw new IllegalStateException("DataSource was not injected");
+    }
     jdbc = new JdbcTemplate(dataSource);
 }
 

@@ -12,20 +12,48 @@
 </head>
 <body>
     
-    <header>
-        <aside>
-            <img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube">
-            <h1>Santos Futebol Clube - Página em Construção</h1>
-        </aside>
-        <nav>
+    <header class="header-duplo">
+
+        <!-- Linha 1: Logo + Título + Login/Usuário -->
+        <div class="header-top">
+            <aside class="header-marca">
+                <img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube">
+                <h1>Santos Futebol Clube 2026</h1>
+            </aside>
+
+            <aside class="header-usuario">
+                <!-- Se estiver logado -->
+                <span sec:authorize="isAuthenticated()">
+                    Olá, <strong sec:authentication="name"></strong>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit"
+                            onclick="return confirm('Deseja realmente sair da sua conta?');">
+                            Sair
+                        </button>
+                    </form>
+                </span>
+                <!-- Se NÃO estiver logado -->
+                <span sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}">Login</a>
+                </span>
+            </aside>
+        </div>
+
+        <!-- Linha 2: Navegação -->
+        <nav class="header-nav">
             <ul>
-                <li><a th:href="@{/}">Home</a></li> 
+                <li><a th:href="@{/}">Home</a></li>
                 <li><a th:href="@{/listagemTitulo}">Títulos</a></li>
-                <li>Elenco</li>
+                <li><a th:href="@{/elenco}">Elenco</a></li>
                 <li><a th:href="@{/escudos}">Escudos</a></li>
-                <li><a th:href="@{/campeaoSerieB}">Campeão Serie B</a></li>
+                <li><a th:href="@{/jogador}">Jogador</a></li>
+                <li><a th:href="@{/campeonato}">Campeonato</a></li>
+                <li><a th:href="@{/inscritos}">Inscritos</a></li>
+                <!-- Só aparece para o admin -->
+                <li sec:authorize="hasAuthority('admin')"><a th:href="@{/listagemUsuario}">Usuários</a></li>
             </ul>
         </nav>
+
     </header>
 
     <main class="elenco">
@@ -33,7 +61,7 @@
         <h2>NOSSO TIME</h2>
 
         <table>
-            <caption>Goleiros</caption>
+            <caption><img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube"> Goleiros</caption>
             <thead>
                 <tr>
                     <th>Diógenes</th>
@@ -51,9 +79,146 @@
                 </tr>
             </tbody>
         </table>
+
+
+        <table>
+            <caption><img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube">Zagueiros</caption>
+            <thead>
+                <tr>
+                    <th>Lucas Veríssimo</th>
+                    <th>Zé Ivaldo</th>
+                    <th>Adonis Frías</th>
+                    <th>João Ananias</th>
+                    <th>Luan Peres</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img th:src="@{img/05-Lucas-Verissimo.png}" alt="Zagueiro Lucas Verissimo"></td>
+                    <td><img th:src="@{img/06-Ze-Ivaldo.png}" alt="Zagueiro Zé Ivaldo"></td>
+                    <td><img th:src="@{img/07-Adonis-Frias.png}" alt="Zagueiro Adonis Frías"></td>
+                    <td><img th:src="@{img/08-Joao-Ananias.png}" alt="Zagueiro João-Ananias"></td>
+                    <td><img th:src="@{img/09-Luan-Peres.png}" alt="Zagueiro Luan Peres"></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <table>
+            <caption><img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube"> Laterais</caption>
+            <thead>
+                <tr>
+                    <th>Gonzalo Escobar</th>
+                    <th>Rafael Gonzaga</th>
+                    <th>Igor Vinícius</th>
+                    <th>Vinícius Lira</th>
+                    <th>Mayke</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img th:src="@{img/10-Gonzalo-Escobar.png}" alt="Lateral Gonzalo Escobar"></td>
+                    <td><img th:src="@{img/11-Rafael-Gonzaga.png}" alt="Lateral Rafael Gonzaga"></td>
+                    <td><img th:src="@{img/12-Igor-Vinicius.png}" alt="Lateral Igor Vinícius"></td>
+                    <td><img th:src="@{img/13-Vinicius-Lira.png}" alt="Lateral Vinícius Lira"></td>
+                    <td><img th:src="@{img/14-Mayke.png}" alt="Lateral Mayke"></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <table>
+            <caption><img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube"> Meio Campistas</caption>
+            <thead>
+                <tr>
+                    <th>Neymar Jr</th>
+                    <th>Rollheiser</th>
+                    <th>Gabriel Bontempo</th>
+                    <th>Gabriel Menino</th>
+                    <th>Gustavo Henrique</th>
+                    <th>Miguelito</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img th:src="@{img/15-Neymar-Jr.png}" alt="Meio Campista Neymar Jr"></td>
+                    <td><img th:src="@{img/16-Rollheiser.png}" alt="Meio Campista Rollheiser"></td>
+                    <td><img th:src="@{img/17-Gabriel-Bontempo.png}" alt="Meio Campista Gabriel Bontempo"></td>
+                    <td><img th:src="@{img/18-Gabriel-Menino.png}" alt="Meio Campista Gabriel Menino"></td>
+                    <td><img th:src="@{img/19-Gustavo-Henrique.png}" alt="Meio Campista Gustavo Henrique"></td>
+                    <td><img th:src="@{img/20-Miguelito.png}" alt="Meio Campista Miguelito"></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <table>
+            <caption><img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube">Volantes</caption>
+            <thead>
+                <tr>
+                    <th>Willian Arão</th>
+                    <th>Zé Rafael</th>
+                    <th>João Schmidt</th>
+                    <th>Christian Oliva</th>
+                    <th>Tomás Rincón</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img th:src="@{img/21-Willian-Arao.png}" alt="Volante Willian Arão"></td>
+                    <td><img th:src="@{img/22-Ze-Rafael.png}" alt="Volante Zé Rafael"></td>
+                    <td><img th:src="@{img/23-Joao-Schmidt.png}" alt="Volante João Schmidt"></td>
+                    <td><img th:src="@{img/24-Christian-Oliva.png}" alt="Volante Christian Oliva"></td>
+                    <td><img th:src="@{img/25-Tomas-Rincon.png}" alt="Volante Tomás Rincón"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table>
+            <caption><img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube"> Atacantes</caption>
+            <thead>
+                <tr>
+                    <th>Lautaro Díaz</th>
+                    <th>Mateus Xavier</th>
+                    <th>Moisés</th>
+                    <th>Nadson</th>
+                    <th>Robinho Jr</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img th:src="@{img/26-Lautaro-Diaz.png}" alt="Atacante Lautaro Díaz"></td>
+                    <td><img th:src="@{img/27-Mateus-Xavier.png}" alt="Atacante Mateus Xavier"></td>
+                    <td><img th:src="@{img/28-Moises.png}" alt="Atacante Moisés"></td>
+                    <td><img th:src="@{img/29-Nadson.png}" alt="Atacante Nadson"></td>
+                    <td><img th:src="@{img/30-Robinho-Jr.png}" alt="Atacante Robinho Jr"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table>
+            <caption><img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube"> Atacantes</caption>
+            <thead>
+                <tr>
+                    <th>Rony</th>
+                    <th>Thaciano</th>
+                    <th>Álvaro Barreal</th>
+                    <th>Gabriel Barbosa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img th:src="@{img/31-Rony.png}" alt="Atacante Rony"></td>
+                    <td><img th:src="@{img/32-Thaciano.png}" alt="Atacante Thaciano"></td>
+                    <td><img th:src="@{img/33-Barreal.png}" alt="Atacante Álvaro Barreal"></td>
+                    <td><img th:src="@{img/34-Gabriel-Barbosa.png}" alt="Atacante Gabriel Barbosa"></td>
+                </tr>
+            </tbody>
+        </table>
+
     </main>
 
-
+ 
     <footer>
         <p>&copy; Criado por: Reginaldo Luiz Formoso Junior | Aluno de Sistemas para Internet - FATEC-RL. 2026</p>
     </footer>

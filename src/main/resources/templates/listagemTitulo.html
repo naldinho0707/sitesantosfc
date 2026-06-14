@@ -11,20 +11,48 @@
 
 <body id="body-listagem">
 
-    <header id="header-listagem">
-        <aside>
-            <img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube">
-            <h1>Santos Futebol Clube</h1>
-        </aside>
-        <nav>
+    <header class="header-duplo">
+
+        <!-- Linha 1: Logo + Título + Login/Usuário -->
+        <div class="header-top">
+            <aside class="header-marca">
+                <img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube">
+                <h1>Santos Futebol Clube 2026</h1>
+            </aside>
+
+            <aside class="header-usuario">
+                <!-- Se estiver logado -->
+                <span sec:authorize="isAuthenticated()">
+                    Olá, <strong sec:authentication="name"></strong>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit"
+                            onclick="return confirm('Deseja realmente sair da sua conta?');">
+                            Sair
+                        </button>
+                    </form>
+                </span>
+                <!-- Se NÃO estiver logado -->
+                <span sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}">Login</a>
+                </span>
+            </aside>
+        </div>
+
+        <!-- Linha 2: Navegação -->
+        <nav class="header-nav">
             <ul>
-                <li><a th:href="@{/}">Home</a></li> 
-                <li>Títulos</li>
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/listagemTitulo}">Títulos</a></li>
                 <li><a th:href="@{/elenco}">Elenco</a></li>
                 <li><a th:href="@{/escudos}">Escudos</a></li>
-                <li><a th:href="@{/campeaoSerieB}">Campeão Serie B</a></li>
+                <li><a th:href="@{/jogador}">Jogador</a></li>
+                <li><a th:href="@{/campeonato}">Campeonato</a></li>
+                <li><a th:href="@{/inscritos}">Inscritos</a></li>
+                <!-- Só aparece para o admin -->
+                <li sec:authorize="hasAuthority('admin')"><a th:href="@{/listagemUsuario}">Usuários</a></li>
             </ul>
         </nav>
+
     </header>
 
     <main id="main-listagem">
@@ -78,6 +106,10 @@
             </table>
         </section>
     </main>
+
+    <footer>
+        <p>&copy; Criado por: Reginaldo Luiz Formoso Junior | Aluno de Sistemas para Internet - FATEC-RL. 2026</p>
+    </footer>
 
 
 </body>

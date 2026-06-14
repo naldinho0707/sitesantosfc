@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" th:href="@{img/Santos-480.png}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <title>JOGADORES | SANTOS FC</title>
+</head>
+<body id="body-listagem">
+    <header id="header-listagem" class="header-duplo">
+        <div class="header-top">
+            <aside class="header-marca">
+                <img th:src="@{img/santos-header.png}" alt="Logo">
+                <h1>Santos Futebol Clube 2026</h1>
+            </aside>
+            <aside class="header-usuario">
+                <span sec:authorize="isAuthenticated()">
+                    Olá, <strong sec:authentication="name"></strong>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit"
+                            th:data-nome="${#authentication.name}"
+                            onclick="return confirm('Deseja realmente sair da conta: ' + this.dataset.nome + '?');">
+                            Sair
+                        </button>
+                    </form>
+                </span>
+                <span sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}">Login</a>
+                </span>
+            </aside>
+        </div>
+        <nav class="header-nav">
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/listagemTitulo}">Títulos</a></li>
+                <li><a th:href="@{/elenco}">Elenco</a></li>
+                <li><a th:href="@{/escudos}">Escudos</a></li>
+                <li><a th:href="@{/jogador}">Jogador</a></li>
+                <li><a th:href="@{/campeonato}">Campeonato</a></li>
+                <li><a th:href="@{/inscritos}">Inscritos</a></li>
+                <li sec:authorize="hasAuthority('admin')">
+                    <a th:href="@{/listagemUsuario}">Usuários</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-listagem-jogador-campeonato">
+
+        <h2>JOGADORES DO SANTOS FC</h2>
+        
+        <ul>
+            <li sec:authorize="hasAuthority('admin')">
+                <a th:href="@{/jogador/cadastrar}">+ Cadastrar Jogador</a>
+            </li>
+            <!-- <li><h2>JOGADORES DO SANTOS FC</h2></li> -->
+            <li sec:authorize="hasAuthority('admin')">
+                <a th:href="@{/inscricao}">+ Inscrever em Campeonato</a>
+            </li>
+        </ul>
+
+        <section class="tabelaTitulos tabelaJogador">
+            <table>
+                <thead>
+                    <tr>
+                        <th>MATRÍCULA</th>
+                        <th>NOME</th>
+                        <th>IDADE</th>
+                        <th sec:authorize="hasAuthority('admin')">DELETAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="jogador : ${jogadores}">
+                        <td th:text="${jogador.matricula}"></td>
+                        <td th:text="${jogador.nome}"></td>
+                        <td th:text="${jogador.idade}"></td>
+                        <td sec:authorize="hasAuthority('admin')">
+                            <form th:action="@{'/jogador/' + ${jogador.id} + '/deletar'}"
+                                  method="post">
+                                <button type="submit"
+                                    th:data-nome="${jogador.nome}"
+                                    onclick="return confirm('Deseja realmente excluir o jogador: ' + this.dataset.nome + '?');">
+                                    <img th:src="@{img/trash-32.ico}" alt="Deletar">
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Criado por: Reginaldo Luiz Formoso Junior | FATEC-RL. 2026</p>
+    </footer>
+</body>
+</html>

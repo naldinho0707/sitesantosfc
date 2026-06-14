@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" th:href="@{img/Santos-480.png}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <title>INSCRIÇÃO | SANTOS FC</title>
+</head>
+<body>
+    <header class="header-duplo">
+        <div class="header-top">
+            <aside class="header-marca">
+                <img th:src="@{img/santos-header.png}" alt="Logo">
+                <h1>Santos Futebol Clube 2026</h1>
+            </aside>
+            <aside class="header-usuario">
+                <span sec:authorize="isAuthenticated()">
+                    Olá, <strong sec:authentication="name"></strong>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit"
+                            th:data-nome="${#authentication.name}"
+                            onclick="return confirm('Deseja realmente sair da conta: ' + this.dataset.nome + '?');">
+                            Sair
+                        </button>
+                    </form>
+                </span>
+                <span sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}">Login</a>
+                </span>
+            </aside>
+        </div>
+        <nav class="header-nav">
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/listagemTitulo}">Títulos</a></li>
+                <li><a th:href="@{/elenco}">Elenco</a></li>
+                <li><a th:href="@{/escudos}">Escudos</a></li>
+                <li><a th:href="@{/jogador}">Jogador</a></li>
+                <li><a th:href="@{/campeonato}">Campeonato</a></li>
+                <li><a th:href="@{/inscritos}">Inscritos</a></li>
+                <li sec:authorize="hasAuthority('admin')">
+                    <a th:href="@{/listagemUsuario}">Usuários</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="cadastrarTitulo">
+        <div>
+            <a th:href="@{/campeonato}">Voltar</a>
+            <h2>Inscrever Jogador em Campeonato</h2>
+        </div>
+        <section>
+            <form th:action="@{/inscricao}" method="post" autocomplete="off">
+
+                <label>Selecione o Jogador</label>
+                <select name="jogadorId" required>
+                    <option value="">-- Selecione um jogador --</option>
+                    <option th:each="jogador : ${jogadores}"
+                            th:value="${jogador.id}"
+                            th:text="${jogador.matricula} + ' - ' + ${jogador.nome}">
+                    </option>
+                </select>
+
+                <label>Selecione o Campeonato</label>
+                <select name="campeonatoId" required>
+                    <option value="">-- Selecione um campeonato --</option>
+                    <option th:each="campeonato : ${campeonatos}"
+                            th:value="${campeonato.id}"
+                            th:text="${campeonato.nome} + ' (' + ${campeonato.temporada} + ')'">
+                    </option>
+                </select>
+
+                <button type="submit">Inscrever Jogador</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Criado por: Reginaldo Luiz Formoso Junior | FATEC-RL. 2026</p>
+    </footer>
+</body>
+</html>

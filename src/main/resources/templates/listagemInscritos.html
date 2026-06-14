@@ -2,28 +2,20 @@
 <html xmlns="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" th:href="@{img/Santos-480.png}" type="image/x-icon">
     <link rel="stylesheet" th:href="@{css/style.css}">
-    <title>SANTOS FUTEBOL CLUBE</title>
+    <title>INSCRITOS | SANTOS FC</title>
 </head>
-
-<body>
-    
-    <header class="header-duplo">
-
-        <!-- Linha 1: Logo + Título + Login/Usuário -->
+<body id="body-listagem">
+    <header id="header-listagem" class="header-duplo">
         <div class="header-top">
             <aside class="header-marca">
-                <img th:src="@{img/santos-header.png}" alt="Logo do Santos Futebol Clube">
+                <img th:src="@{img/santos-header.png}" alt="Logo">
                 <h1>Santos Futebol Clube 2026</h1>
             </aside>
-
             <aside class="header-usuario">
-                <!-- Se estiver logado -->
                 <span sec:authorize="isAuthenticated()">
                     Olá, <strong sec:authentication="name"></strong>
                     <form th:action="@{/logout}" method="post">
@@ -33,14 +25,11 @@
                         </button>
                     </form>
                 </span>
-                <!-- Se NÃO estiver logado -->
                 <span sec:authorize="!isAuthenticated()">
                     <a th:href="@{/login}">Login</a>
                 </span>
             </aside>
         </div>
-
-        <!-- Linha 2: Navegação -->
         <nav class="header-nav">
             <ul>
                 <li><a th:href="@{/}">Home</a></li>
@@ -50,45 +39,42 @@
                 <li><a th:href="@{/jogador}">Jogador</a></li>
                 <li><a th:href="@{/campeonato}">Campeonato</a></li>
                 <li><a th:href="@{/inscritos}">Inscritos</a></li>
-                <!-- Só aparece para o admin -->
-                <li sec:authorize="hasAuthority('admin')"><a th:href="@{/listagemUsuario}">Usuários</a></li>
+                <li sec:authorize="hasAuthority('admin')">
+                    <a th:href="@{/listagemUsuario}">Usuários</a>
+                </li>
             </ul>
         </nav>
-
     </header>
 
-    <main>
-        <h2>Hino Oficial</h2>
-        <article>
-            <p>Sou alvinegro da Vila Belmiro</p>
-            <p>O Santos vive no meu coração</p>
-            <p>É o motivo de todo o meu riso</p>
-            <p>De minhas lágrimas e emoção</p>
-        </article>
-        <article>
-            <p>Sua bandeira no mastro é a história</p>
-            <p>De um passado e um presente só de glórias</p>
-            <p>Nascer, viver e no Santos morrer</p>
-            <p>É um orgulho que nem todos podem ter</p>
-        </article>
-        <article>
-            <p>No Santos pratica-se o esporte</p>
-            <p>Com dignidade e com fervor</p>
-            <p>Seja qual for a sua sorte</p>
-            <p>De vencido ou vencedor</p>
-        </article>
-        <article>
-            <p>Com técnica e disciplina</p>
-            <p>Dando o sangue com amor</p>
-            <p>Pela bandeira que ensina</p>
-            <p>Lutar com fé e com ardor</p>
-        </article>
+    <main id="main-listagem-jogador-campeonato">
+        <ul>
+            <li><h2>JOGADORES INSCRITOS EM CAMPEONATOS</h2></li>
+        </ul>
+
+        <section class="tabelaTitulos tabelaInscritos">
+            <table>
+                <thead>
+                    <tr>
+                        <th>MATRÍCULA</th>
+                        <th>JOGADOR</th>
+                        <th>CAMPEONATO</th>
+                        <th>DATA INSCRIÇÃO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="inscrito : ${inscritos}">
+                        <td th:text="${inscrito.matricula}"></td>
+                        <td th:text="${inscrito.jogador_nome}"></td>
+                        <td th:text="${inscrito.campeonato_nome}"></td>
+                        <td th:text="${inscrito.data_inscricao}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
     </main>
 
     <footer>
-        <p>&copy; Criado por: Reginaldo Luiz Formoso Junior | Aluno de Sistemas para Internet - FATEC-RL. 2026</p>
+        <p>&copy; Criado por: Reginaldo Luiz Formoso Junior | FATEC-RL. 2026</p>
     </footer>
-
 </body>
 </html>
-

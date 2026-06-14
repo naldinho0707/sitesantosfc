@@ -1,21 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org"> 
-<html lang="pt-br">
+<html xmlns="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" th:href="@{img/Santos-480.png}" type="image/x-icon">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title>ATUALIZAR | SANTOS FC</title>
-    <!-- ajustar a base para carregar imagens e CSS quando há parâmetro na URL, neste cado o ID 
-     de referência para popular o formulário de atualização -->
-    <base href="/" />
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <title>USUÁRIOS | SANTOS FC</title>
+</head>
 
- </head>
+<body id="body-listagem">
 
-<body>
-    
     <header class="header-duplo">
 
         <!-- Linha 1: Logo + Título + Login/Usuário -->
@@ -51,8 +46,8 @@
                 <li><a th:href="@{/elenco}">Elenco</a></li>
                 <li><a th:href="@{/escudos}">Escudos</a></li>
                 <li><a th:href="@{/jogador}">Jogador</a></li>
-                <li><a th:href="@{/inscritos}">Inscritos</a></li>
                 <li><a th:href="@{/campeonato}">Campeonato</a></li>
+                <li><a th:href="@{/inscritos}">Inscritos</a></li>
                 <!-- Só aparece para o admin -->
                 <li sec:authorize="hasAuthority('admin')"><a th:href="@{/listagemUsuario}">Usuários</a></li>
             </ul>
@@ -60,37 +55,51 @@
 
     </header>
 
-    <main class="atualizarTitulo">
+    <main id="main-listagem">
 
-        <h2>Atualize os Dados do Título Selecionado</h2>
+        <ul>
+            <li><a th:href="@{/cadastro}">+ Adicionar Usuário</a></li>
+            <li><h2>USUÁRIOS DO SANTOS FC</h2></li>
+          <!--  <li><a th:href="@{/logout}">Sair</a></li>  -->
+        </ul>
 
-        <section>
-            <form th:action="@{'/atualizarTitulo/' + ${id}}" method="post" th:object="${titulo}" enctype="multipart/form-data">
+        <section class="tabelaTitulos tabelaUsuarios">
+            <table>
 
-                <label for="competicao">Nome da Competição</label>
-                <input type="text" th:field="*{competicao}"  name="competicao" placeholder="Digite o Nome da Competição ex: Mundial de Clubes">
+                <thead>
+                    <tr>
+                        <th>NOME</th>
+                        <th>EMAIL</th>
+                        <th>CARGO</th>
+                        <th>DELETAR</th>
+                    </tr>
+                </thead>
 
-                <label for="qt_titulos">Quantidade de Título do Santos nesta Competição</label>
-                <input type="text" th:field="*{qt_titulos}" name="qt_titulos" maxlength="2">
+                <tbody>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.nome}"></td>
+                        <td th:text="${usuario.email}"></td>
+                        <td th:text="${usuario.cargo}"></td>
+                        <td>
+                            <form th:action="@{'/deletarUsuario/' + ${usuario.id}}" method="post">
+                                <button type="submit"
+                                    th:data-nome="${usuario.nome}"
+                                    onclick="return confirm('Deseja realmente excluir o usuário: ' + this.dataset.nome + '?');">
+                                    <img th:src="@{img/trash-32.ico}" alt="Ícone para Deletar">
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
 
-                <label for="temporadas">Temporadas que o Santos foi Campeão</label>
-                <input type="text" th:field="*{temporadas}" name="temporadas"  placeholder="Digite os anos que o Santos foi Campeão" maxlength="255">
-
-                <label for="file">Carregue outra Imagem para Substituir a do lado</label>
-                <input type="file" name="file">
-
-                <!-- <input type="submit" value="Cadastrar" name="Cadastrar"> -->
-                <button type="submit" name="Atualizar">Atualizar Dados</button>
-            </form>
-
-            <div>
-                <a th:href="@{/listagemTitulo}">Voltar</a></li>
-                <img th:if="${titulo.imagem}" th:src="@{|/uploads/${titulo.imagem}|}" alt="Imagem da Taça do Título">
-            </div>
+            </table>
         </section>
 
     </main>
 
+    <footer>
+        <p>&copy; Criado por: Reginaldo Luiz Formoso Junior | Aluno de Sistemas para Internet - FATEC-RL. 2026</p>
+    </footer>
+
 </body>
 </html>
-

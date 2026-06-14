@@ -20,10 +20,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.santosfc.sitesantosfc.model.Campeonato;
+import com.santosfc.sitesantosfc.model.CampeonatoService;
+import com.santosfc.sitesantosfc.model.Jogador;
+import com.santosfc.sitesantosfc.model.JogadorService;
 import com.santosfc.sitesantosfc.model.Titulo;
 import com.santosfc.sitesantosfc.model.TituloService;
 import com.santosfc.sitesantosfc.model.Tool;
-
+import com.santosfc.sitesantosfc.model.Usuario;
+//import com.santosfc.sitesantosfc.model.UsuarioDAO;
+import com.santosfc.sitesantosfc.model.UsuarioService;
 
 
 @Controller
@@ -34,6 +40,8 @@ public class TitulosController {
 
     private static String PASTA_UPLOAD = "src/main/resources/static/uploads/";
    
+    
+    // ======================= Páginas públicas =======================
 
     @GetMapping("/")
     public String principal(){
@@ -53,10 +61,159 @@ public class TitulosController {
         return "escudos";
     }
 
-    @GetMapping("/campeaoSerieB")
-    public String campeaoSerieB(){
-       // retorno página campeão série B
-        return "campeaoSerieB";
+ 
+
+    // ======================= Cadastrar Usuário =======================
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/cadastro")
+    public String formCadastro(Model model) {
+        model.addAttribute("usuario", new Usuario());
+        return "cadastroUsuario";
+    }
+
+    @PostMapping("/cadastro")
+    public String cadastrar(@ModelAttribute Usuario usuario) {
+        UsuarioService us = context.getBean(UsuarioService.class);
+        us.inserirUsuario(usuario);                      // salva com BCrypt
+        String uuid = us.obterUUID(usuario.getEmail());  // busca UUID gerado
+        us.inserirPerfil(uuid);                          // atribui cargo "torcedor"
+        return "redirect:/login";
+    }
+
+    @GetMapping("/cadastroUsuario")
+    public String formCadastroUsuario(Model model) {
+        model.addAttribute("usuario", new Usuario());
+        return "cadastroUsuario";
+    }
+
+    // ← ADICIONAR ESTE MÉTODO
+    @PostMapping("/cadastroUsuario")
+    public String cadastrarUsuario(@ModelAttribute Usuario usuario) {
+        UsuarioService us = context.getBean(UsuarioService.class);
+        us.inserirUsuario(usuario);
+        String uuid = us.obterUUID(usuario.getEmail());
+        us.inserirPerfil(uuid);
+        return "redirect:/login";
+    }
+
+    // Listagem só para admin
+    @GetMapping("/listagemUsuario")
+    public String listarUsuarios(Model model) {
+        UsuarioService us = context.getBean(UsuarioService.class);
+        model.addAttribute("usuarios", us.listarUsuarios());
+        return "listagemUsuario";
+    }
+
+    //Acesso negado de usuário comum para ver listagem de usuários
+    @GetMapping("/acesso-negado")
+    public String acessoNegado() {
+        return "acessoNegado";
+    }
+
+    //Deletar Usuário
+    @PostMapping("/deletarUsuario/{id}")
+    public String deletarUsuario(@PathVariable String id) {
+        UsuarioService us = context.getBean(UsuarioService.class);
+        us.deletarUsuario(id);
+        return "redirect:/listagemUsuario";
+    }
+    
+
+    // ======================= Jogador =======================
+
+    @GetMapping("/jogador")
+    public String listarJogadores(Model model) {
+        JogadorService js = context.getBean(JogadorService.class);
+        model.addAttribute("jogadores", js.listarJogadores());
+        return "listagemJogador";
+    }
+
+    @GetMapping("/jogador/cadastrar")
+    public String formJogador(Model model) {
+        model.addAttribute("jogador", new Jogador());
+        return "cadastroJogador";
+    }
+
+    @PostMapping("/jogador/cadastrar")
+    public String cadastrarJogador(@ModelAttribute Jogador jogador, Model model) {
+    try {
+        JogadorService js = context.getBean(JogadorService.class);
+        js.inserirJogador(jogador);
+        return "redirect:/jogador";
+    } catch (Exception e) {
+        model.addAttribute("jogador", jogador);
+        model.addAttribute("erro", "Matrícula " + jogador.getMatricula() + " já existe!");
+        return "cadastroJogador";
+    }
+}
+
+    @PostMapping("/jogador/{id}/deletar")
+    public String deletarJogador(@PathVariable String id) {
+        JogadorService js = context.getBean(JogadorService.class);
+        js.deletarJogador(id);
+        return "redirect:/jogador";
+    }
+
+    // ======================= Campeonato =======================
+
+    @GetMapping("/campeonato")
+    public String listarCampeonatos(Model model) {
+        CampeonatoService cs = context.getBean(CampeonatoService.class);
+        model.addAttribute("campeonatos", cs.listarCampeonatos());
+        return "listagemCampeonato";
+    }
+
+    @GetMapping("/campeonato/cadastrar")
+    public String formCampeonato(Model model) {
+        model.addAttribute("campeonato", new Campeonato());
+        return "cadastroCampeonato";
+    }
+
+    @PostMapping("/campeonato/cadastrar")
+    public String cadastrarCampeonato(@ModelAttribute Campeonato campeonato) {
+        CampeonatoService cs = context.getBean(CampeonatoService.class);
+        cs.inserirCampeonato(campeonato);
+        return "redirect:/campeonato";
+    }
+
+    @PostMapping("/campeonato/{id}/deletar")
+    public String deletarCampeonato(@PathVariable String id) {
+        CampeonatoService cs = context.getBean(CampeonatoService.class);
+        cs.deletarCampeonato(id);
+        return "redirect:/campeonato";
+    }
+
+    // ======================= Inscrição =======================
+
+    @GetMapping("/inscricao")
+    public String formInscricao(Model model) {
+        JogadorService js = context.getBean(JogadorService.class);
+        CampeonatoService cs = context.getBean(CampeonatoService.class);
+        model.addAttribute("jogadores", js.listarJogadores());
+        model.addAttribute("campeonatos", cs.listarCampeonatos());
+        return "inscricao";
+    }
+
+    @PostMapping("/inscricao")
+    public String inscrever(@RequestParam String jogadorId,
+                            @RequestParam String campeonatoId) {
+        CampeonatoService cs = context.getBean(CampeonatoService.class);
+        cs.inscrever(jogadorId, campeonatoId);
+        return "redirect:/campeonato";
+    }
+
+    // ======================= Inscritos =======================
+
+    @GetMapping("/inscritos")
+    public String listarInscritos(Model model) {
+        JogadorService js = context.getBean(JogadorService.class);
+        model.addAttribute("inscritos", js.listarInscritos());
+        return "listagemInscritos";
     }
 
 
@@ -95,7 +252,8 @@ public class TitulosController {
 
         ts.inserirTitulo(titulo);
         // arrumar depois o retorno para a página sucesso
-        return "principal";
+        //return "principal";
+        return "redirect:/listagemTitulo";  // ← corrigido: era "principal"
     }
 
 

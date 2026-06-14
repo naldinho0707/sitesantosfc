@@ -1,21 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org"> 
+<html xmlns="http://www.thymeleaf.org">
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" th:href="@{img/Santos-480.png}" type="image/x-icon">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title>ATUALIZAR | SANTOS FC</title>
-    <!-- ajustar a base para carregar imagens e CSS quando há parâmetro na URL, neste cado o ID 
-     de referência para popular o formulário de atualização -->
-    <base href="/" />
-
- </head>
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <title>CADASTRO USUÁRIO | SANTOS FC</title>
+</head>
 
 <body>
-    
+
     <header class="header-duplo">
 
         <!-- Linha 1: Logo + Título + Login/Usuário -->
@@ -51,8 +47,8 @@
                 <li><a th:href="@{/elenco}">Elenco</a></li>
                 <li><a th:href="@{/escudos}">Escudos</a></li>
                 <li><a th:href="@{/jogador}">Jogador</a></li>
-                <li><a th:href="@{/inscritos}">Inscritos</a></li>
                 <li><a th:href="@{/campeonato}">Campeonato</a></li>
+                <li><a th:href="@{/inscritos}">Inscritos</a></li>
                 <!-- Só aparece para o admin -->
                 <li sec:authorize="hasAuthority('admin')"><a th:href="@{/listagemUsuario}">Usuários</a></li>
             </ul>
@@ -60,37 +56,35 @@
 
     </header>
 
-    <main class="atualizarTitulo">
+    <main class="cadastrarTitulo cadastrarUsuario">
 
-        <h2>Atualize os Dados do Título Selecionado</h2>
+        <div>
+            <h2>Cadastre-se no Santos FC!</h2>
+            <a th:href="@{/login}">Voltar</a>
+        </div>
 
         <section>
-            <form th:action="@{'/atualizarTitulo/' + ${id}}" method="post" th:object="${titulo}" enctype="multipart/form-data">
+            <form th:action="@{/cadastroUsuario}" method="post" th:object="${usuario}">
 
-                <label for="competicao">Nome da Competição</label>
-                <input type="text" th:field="*{competicao}"  name="competicao" placeholder="Digite o Nome da Competição ex: Mundial de Clubes">
+                <label for="nome">Nome completo</label>
+                <input type="text" th:field="*{nome}" placeholder="Digite seu nome completo" required>
 
-                <label for="qt_titulos">Quantidade de Título do Santos nesta Competição</label>
-                <input type="text" th:field="*{qt_titulos}" name="qt_titulos" maxlength="2">
+                <label for="email">Email</label>
+                <input type="email" th:field="*{email}" placeholder="Digite seu email" autocomplete="off" required>
 
-                <label for="temporadas">Temporadas que o Santos foi Campeão</label>
-                <input type="text" th:field="*{temporadas}" name="temporadas"  placeholder="Digite os anos que o Santos foi Campeão" maxlength="255">
+                <label for="password">Senha</label>
+                <input type="password" th:field="*{password}" placeholder="Digite sua senha" autocomplete="off" required>
 
-                <label for="file">Carregue outra Imagem para Substituir a do lado</label>
-                <input type="file" name="file">
+                <button type="submit">Cadastrar</button>
 
-                <!-- <input type="submit" value="Cadastrar" name="Cadastrar"> -->
-                <button type="submit" name="Atualizar">Atualizar Dados</button>
             </form>
-
-            <div>
-                <a th:href="@{/listagemTitulo}">Voltar</a></li>
-                <img th:if="${titulo.imagem}" th:src="@{|/uploads/${titulo.imagem}|}" alt="Imagem da Taça do Título">
-            </div>
         </section>
 
     </main>
 
+    <footer>
+        <p>© Criado por: Reginaldo Luiz Formoso Junior | Aluno de Sistemas para Internet - FATEC-RL. 2026</p>
+    </footer>
+
 </body>
 </html>
-
