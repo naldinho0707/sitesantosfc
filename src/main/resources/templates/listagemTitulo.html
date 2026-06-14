@@ -82,7 +82,14 @@
                     <!-- a cada cliente a variável "clientes"-->
                     <tr th:each="titulo : ${titulos}">
                         <td th:text="${titulo.id}"></td>
-                        <td><img th:if="${titulo.imagem}" th:src="@{'uploads/' + ${titulo.imagem}}" alt="Imagem da Taça do Campeonato" class="taca"></td>
+
+                        <!--
+                        <td><img th:if="${titulo.imagem}" th:src="@{'uploads/' + ${titulo.imagem}}" alt="Imagem da Taça do Campeonato" class="taca"></td> -->
+
+                        <!-- ✅ Correto — usa URL do Cloudinary diretamente -->
+                        <td><img th:if="${titulo.imagem}" th:src="${titulo.imagem}" 
+                                alt="Imagem da Taça do Campeonato" class="taca"></td>
+
                         <td th:text="${titulo.competicao}"></td>
                         <td th:text="${titulo.qt_titulos}"></td>
                         <td th:text="${titulo.temporadas}"></td>

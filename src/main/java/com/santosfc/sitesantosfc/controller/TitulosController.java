@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.santosfc.sitesantosfc.model.Campeonato;
 import com.santosfc.sitesantosfc.model.CampeonatoService;
+import com.santosfc.sitesantosfc.model.CloudinaryService;
 import com.santosfc.sitesantosfc.model.Jogador;
 import com.santosfc.sitesantosfc.model.JogadorService;
 import com.santosfc.sitesantosfc.model.Titulo;
@@ -227,7 +228,7 @@ public class TitulosController {
         return "cadastroTitulo";
     }
 
-
+    /* 
     @PostMapping("/cadastroTitulo")
     public String cadastrarTitulo(Model model, @ModelAttribute Titulo titulo,
     @RequestParam("file") MultipartFile file){
@@ -255,13 +256,34 @@ public class TitulosController {
         //return "principal";
         return "redirect:/listagemTitulo";  // ← corrigido: era "principal"
     }
+    */
 
+    @Autowired
+    private CloudinaryService cloudinaryService;
+
+    @PostMapping("/cadastroTitulo")
+    public String cadastrarTitulo(Model model, @ModelAttribute Titulo titulo,
+            @RequestParam("file") MultipartFile file) {
+        TituloService ts = context.getBean(TituloService.class);
+        try {
+            if (!file.isEmpty()) {
+                String urlImagem = cloudinaryService.uploadImagem(file);
+                titulo.setImagem(urlImagem); // salva a URL em vez do nome do arquivo
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ts.inserirTitulo(titulo);
+        return "redirect:/listagemTitulo";
+    }
 
     // =================================================================
 
     // *****************************************************************
 
     // ========================= Listar Títulos ========================
+
+
 
     @GetMapping("/listagemTitulo")
      public String listagemTitulo(Model model){
@@ -287,6 +309,10 @@ public class TitulosController {
        model.addAttribute("titulos", listaTitulos);
        return "listagemTitulo";
     }
+
+
+
+
 
     // =================================================================
 
@@ -315,7 +341,7 @@ public class TitulosController {
         return "atualizarTitulo";
     }
 
-
+    /*
     @PostMapping("/atualizarTitulo/{id}")
     public String atualizarTitulo(@PathVariable int id, @ModelAttribute Titulo titulo,
     @RequestParam("file") MultipartFile file){
@@ -345,6 +371,30 @@ public class TitulosController {
         ts.atualizarTitulo(id, titulo);
         return "redirect:/listagemTitulo";
     }
+    */
+
+    @PostMapping("/atualizarTitulo/{id}")
+    public String atualizarTitulo(@PathVariable int id, @ModelAttribute Titulo titulo,
+            @RequestParam("file") MultipartFile file) {
+        TituloService ts = context.getBean(TituloService.class);
+        Titulo oldTitulo = ts.obterTitulo(id);
+        try {
+            if (!file.isEmpty()) {
+                // Deleta a imagem antiga do Cloudinary
+                if (oldTitulo.getImagem() != null && oldTitulo.getImagem().startsWith("http")) {
+                    cloudinaryService.deletarImagem(oldTitulo.getImagem());
+                }
+                String urlImagem = cloudinaryService.uploadImagem(file);
+                titulo.setImagem(urlImagem);
+            } else {
+                titulo.setImagem(oldTitulo.getImagem());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ts.atualizarTitulo(id, titulo);
+        return "redirect:/listagemTitulo";
+    }
 
 
     // =================================================================
@@ -353,6 +403,8 @@ public class TitulosController {
 
     // =====================  Deletar Título ===========================
 
+    
+    /*
     @PostMapping("/deletarTitulo/{id}")
     public String deletarTitulo(@PathVariable int id){
         TituloService ts = context.getBean(TituloService.class);
@@ -372,6 +424,22 @@ public class TitulosController {
         return "redirect:/listagemTitulo";
        
     }
+    */
+
+    @PostMapping("/deletarTitulo/{id}")
+        public String deletarTitulo(@PathVariable int id) {
+            TituloService ts = context.getBean(TituloService.class);
+            Titulo titulo = ts.obterTitulo(id);
+                // Deleta do Cloudinary se for URL
+                if (titulo.getImagem() != null && titulo.getImagem().startsWith("http")) {
+                    cloudinaryService.deletarImagem(titulo.getImagem());
+                }
+
+            ts.deletarTitulo(id);
+            return "redirect:/listagemTitulo";
+        }
 
     
 }
+
+
