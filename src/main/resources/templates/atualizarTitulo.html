@@ -85,7 +85,11 @@
 
             <div>
                 <a th:href="@{/listagemTitulo}">Voltar</a></li>
-                <img th:if="${titulo.imagem}" th:src="@{|/uploads/${titulo.imagem}|}" alt="Imagem da Taça do Título">
+                <!-- ❌ Atual — caminho local desatializado 
+                <img th:if="${titulo.imagem}" th:src="@{|/uploads/${titulo.imagem}|}" alt="Imagem da Taça do Título">  -->
+
+                <!-- ✅ Correto — URL do Cloudinary -->
+                <img th:if="${titulo.imagem != null and titulo.imagem.startsWith('http')}"  th:src="${titulo.imagem}" alt="Imagem da Taça do Título">
             </div>
         </section>
 
